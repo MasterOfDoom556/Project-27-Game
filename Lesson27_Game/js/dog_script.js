@@ -66,12 +66,12 @@ class dog {
     }
     update(input, deltaTime, Opps){
         //Collision detection. Somehow worse than animation
-        Opps.forEach(opps =>{
+        Opps.forEach(Opps =>{
             const dx = opps.x = this.x;
             const dy = opps.y = this.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             if(distance < opps.width/2 + this.width/2){
-                GameOver = true;
+               GameOver = true;
             }
         });
         // dog animation. I did not draw this dog, instead i found the assets on a creative common hub. It did not require me to mention the author, just that i didn't make it.
@@ -200,7 +200,7 @@ function DisplayText(context){
     if(GameOver){
         context.textAlign = 'center';
         context.fillStyle = 'orange';
-    context.fillText('Game Over,' + score, 22, 52)
+    context.fillText('Game Over,', canvas.width/2, 200)
     }
 } // handles the displaying of text, think scoreboard (unless i change it, which i might) and game over screens
 
