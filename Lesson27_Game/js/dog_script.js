@@ -46,9 +46,8 @@ class dog {
         this.image = document.getElementById('dog');
         this.frameX = 0;
         this.maxFrames = 20;
-        this.maxframe = 2;
         this.frameY = 0;
-        this.fps = 40;
+        this.fps = 45;
         this.frameTimer = 0;
         this.frameInterval = 1000/this.fps;
         this.speed = 0;
@@ -56,21 +55,16 @@ class dog {
         this.gravity = 1;
     }
     draw(context){
-        context.strokeStyle = 'white';
-        context.strokeRect(this.x, this.y, this.width, this.height);
-        context.beginPath();
-        context.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
-        context.stroke();
         context.drawImage(this.image, this.frameX * this.width, 0*this.height,
          this.width, this.height, this.x, this.y, this.width, this.height);
     }
     update(input, deltaTime, Opps){
         //Collision detection. Somehow worse than animation
-        Opps.forEach(Opps =>{
-            const dx = opps.x = this.x;
-            const dy = opps.y = this.y;
+        Opps.forEach(enemy =>{
+            const dx = enemy.x - this.x;
+            const dy = enemy.y - this.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            if(distance < opps.width/2 + this.width/2){
+            if(distance < enemy.width/2 + this.width/2){
                GameOver = true;
             }
         });
@@ -184,9 +178,9 @@ function ControlOpps(deltaTime){
     } else{
         OppTimer += deltaTime;
     }
-    Opps.forEach(Opps =>{
-        Opps.draw(ctx);
-        Opps.update(deltaTime);
+    Opps.forEach(enemy =>{
+        enemy.draw(ctx);
+        enemy.update(deltaTime);
     });
     Opps = Opps.filter(opps => !opps.NameInDeathNote);
 }; // animates enemies into and out of the game.
@@ -218,7 +212,7 @@ function animate(timeStamp){
     previousTime = timeStamp;
     ctx.clearRect(0,0,canvas.width, canvas.height);
     Background.draw(ctx);
-   // Background.update();
+	Background.update();
     player.draw(ctx);
     player.update(input, deltaTime, Opps);
     ControlOpps(deltaTime);
