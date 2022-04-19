@@ -1,4 +1,4 @@
-//This is a load event listener. It waits for assets to be loaded in before it runs the code within the callback function. 
+//This is a load event listener. It waits for assets to be loaded in before it runs the code within the callback function.
 //Its an nameless function. It's really important that majority of the game needs to be ran inside of the function
 window.addEventListener('load', function(){
 const canvas = document.getElementById('game');
@@ -15,18 +15,18 @@ class InputHandler {
         this.keys = [];
         window.addEventListener('keydown', z =>{
             if ((z.key === 'ArrowDown' ||
-                z.key === 'ArrowUp' || 
+                z.key === 'ArrowUp' ||
                 z.key === 'ArrowLeft' ||
                 z.key === 'ArrowRight')
                 && this.keys.indexOf(z.key) === -1){
                 this.keys.push(z.key);
             }
-            
+
         });
         window.addEventListener('keyup', z =>{
-           
+
             if (z.key === 'ArrowDown' ||
-                z.key === 'ArrowUp' || 
+                z.key === 'ArrowUp' ||
                 z.key === 'ArrowLeft' ||
                 z.key === 'ArrowRight'){
                 this.keys.splice(this.keys.indexOf(z.key), 1);
@@ -61,8 +61,8 @@ class dog {
     update(input, deltaTime, Opps){
         //Collision detection. Somehow worse than animation
         Opps.forEach(enemy =>{
-            const dx = enemy.x - this.x;
-            const dy = enemy.y - this.y;
+            const dx = (enemy.x + enemy.width/2) - (this.x + this.width/2);
+            const dy = (enemy.y +enemy.height) - (this.y + this.height/2);
             const distance = Math.sqrt(dx * dx + dy * dy);
             if(distance < enemy.width/2 + this.width/2){
                GameOver = true;
@@ -78,7 +78,7 @@ class dog {
         } else {
             this.frameTimer += deltaTime
         }
-        
+
         //movement
         if(input.keys.indexOf('ArrowRight') > -1){
             this.speed = 5;
@@ -89,7 +89,7 @@ class dog {
         } else {
             this.speed = 0;
         }
-        //horizontal movement. Right and Left 
+        //horizontal movement. Right and Left
         this.x += this.speed;
         if(this.x < 0) this.x = 0;
         else if (this.x > this.gameWidth - this.width) this.x = this.gameWidth - this.width;
@@ -102,7 +102,7 @@ class dog {
             this.vy = 0;
             this.frameY = 0;
         }
-        if(this.y > this.gameHeight - this.height) this.y = this.gameHeight - this.height; 
+        if(this.y > this.gameHeight - this.height) this.y = this.gameHeight - this.height;
     }
     isGrounded(){
         return this.y >= this.gameHeight - this.height;
@@ -146,18 +146,18 @@ class opps{
         this.NameInDeathNote = false;
     }
     draw(context){
-        
+
         context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
     }
     update(deltaTime){
         if(this.frameTimer > this.frameInterval){
             if(this.frameX >= this.maxFrames) this.frameX = 0;
-            else this.frameX++; 
+            else this.frameX++;
             this.frameTimer = 0;
         } else {
             this.frameTimer += deltaTime;
         }
-        
+
         this.x-= this.speed;
         if(this.x < 0 - this.width) {
             this.NameInDeathNote = true;
@@ -214,7 +214,6 @@ function animate(timeStamp){
     ControlOpps(deltaTime);
     DisplayText(ctx);
     if(!GameOver) requestAnimationFrame(animate);
-} // bane of my existance. handles animation. 
+} // bane of my existance. handles animation.
 animate(0);
-}); 
-
+});
