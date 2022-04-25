@@ -1,0 +1,14 @@
+body {
+    background: teal;
+}
+#game{
+    background: purple;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    border: 5px solid black;
+}
+#opps, #dog, #scrollingbg {
+    display:none;
+}  /* So, this makes the images that i loaded in the html not display until i say so. This prevents weird loading bugs.*/
